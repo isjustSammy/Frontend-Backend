@@ -6,7 +6,8 @@ const router = express.Router()
 
 router. 
 route("/")
-.get(empCon.get);
+.get(empCon.get)
+.post(empCon.post);
 
 router. 
 route("/:id")

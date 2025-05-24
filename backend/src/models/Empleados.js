@@ -20,7 +20,7 @@ const empleadoSchema = new Schema({
         type:String
     },
     fehcaContra:{
-        type:Date
+        type:String
     },
     salario:{
         type:Number

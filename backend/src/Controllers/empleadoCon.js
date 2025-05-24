@@ -1,5 +1,4 @@
 import empModel from "../models/Empleados.js"
-import bcryptjs from "bcryptjs";
 
 
 const empCon={};
@@ -7,6 +6,13 @@ const empCon={};
 empCon.get = async (req,res) =>{
     const empleado = await empModel.find();
     res.json(empleado);
+}
+
+empCon.post = async (req,res) => {
+  const {nombre,correo,contrasena,telefono,DUI,dirreccion,puesto,fehcaContra,salario}=req.body
+  const newEmpleado = new empModel({nombre,correo,contrasena,telefono,DUI,dirreccion,puesto,fehcaContra,salario});
+  await newEmpleado.save();
+      res.json({message: "empleado registrado"});
 }
 
 empCon.put = async (req, res) => {
@@ -22,18 +28,13 @@ empCon.put = async (req, res) => {
     DUI,
   } = req.body;
 
-  let passHashed = contrasena;
-
-  if (contrasena) {
-    passHashed = await bcryptjs.hash(contrasena, 10);
-  }
 
   await empModel.findByIdAndUpdate(
     req.params.id,
     {
       nombre,
       correo,
-      contrasena: passHashed,
+      contrasena,
       telefono,
       dirreccion,
       puesto,

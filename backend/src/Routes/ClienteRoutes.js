@@ -5,7 +5,8 @@ const router=express.Router();
 
 router. 
 route("/")
-.get(clienteCon.get);
+.get(clienteCon.get)
+.post(clienteCon.post);
 
 router.route("/:id").put(clienteCon.put).delete(clienteCon.delete);
 

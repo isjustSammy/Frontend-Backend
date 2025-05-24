@@ -1,5 +1,4 @@
 import clienteModel from "../models/Cliente.js";
-import bcryptjs from "bcryptjs";
 
 
 const clienteCon ={};
@@ -7,6 +6,13 @@ const clienteCon ={};
 clienteCon.get = async (req,res) =>{
     const cliente = await clienteModel.find();
     res.json(cliente);
+}
+
+clienteCon.post = async (req,res) => {
+  const {nombre,correo,contrasena,telefono,DUI}=req.body
+  const newCliente = new clienteModel({nombre,correo,contrasena,telefono,DUI});
+  await newCliente.save();
+      res.json({message: "cliente registrado"});
 }
 
 clienteCon.delete = async (req,res) =>{
@@ -20,18 +26,15 @@ clienteCon.delete = async (req,res) =>{
 clienteCon.put = async (req, res) => {
   const { nombre, correo, contrasena, telefono, dirrecion, DUI } = req.body;
 
-  let passHashed = contrasena;
 
-  if (contrasena) {
-    passHashed = await bcryptjs.hash(contrasena, 10);
-  }
+ 
 
   await clienteModel.findByIdAndUpdate(
     req.params.id,
     {
       nombre,
       correo,
-      contrasena: passHashed,
+      contrasena,
       telefono,
       dirrecion,
       DUI,
